@@ -58,3 +58,11 @@ https://github.com/intel-hadoop/HiBench/blob/master/docs/run-sparkbench.md
 | -- | -- |
 | hibench.spark.home | /usr/hdp/current/spark2-client
 | hibench.spark.master | yarn
+### Test
+Test Hadoop<br>
+> bin/workloads/micro/wordcount/prepare/prepare.sh<br>
+>bin/workloads/micro/wordcount/spark/run.sh<br>
+
+Test Spark<br<
+> bin/workloads/ml/als/prepare/prepare.sh 
+> bin/workloads/ml/als/spark/run.sh

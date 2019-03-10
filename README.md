@@ -63,6 +63,6 @@ Test Hadoop<br>
 > bin/workloads/micro/wordcount/prepare/prepare.sh<br>
 >bin/workloads/micro/wordcount/spark/run.sh<br>
 
-Test Spark<br<
-> bin/workloads/ml/als/prepare/prepare.sh 
-> bin/workloads/ml/als/spark/run.sh
+Test Spark<br>
+> bin/workloads/ml/als/prepare/prepare.sh<br>
+> bin/workloads/ml/als/spark/run.sh<br>

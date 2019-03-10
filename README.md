@@ -53,6 +53,7 @@ https://github.com/intel-hadoop/HiBench/blob/master/docs/run-sparkbench.md
 
 > cp conf/spark.conf.template conf/spark.conf
 <br>
+
 | Parameter | Example value |
 | -- | -- |
 | hibench.spark.home | /usr/hdp/current/spark2-client

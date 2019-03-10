@@ -26,7 +26,26 @@ https://github.com/intel-hadoop/HiBench/blob/master/docs/build-hibench.md
 > git clone https://github.com/intel-hadoop/HiBench.git<br>
 > cd HiBench<br>
 > mvn -Dspark=2.1 -Dscala=2.11 clean package<br>
+## Hadoop user
+For user running the benchmark:hibench.hadoop.release
+* create */user/{user}* directory
+* if Ranger is enabled, give the user privileges : *submitjob* and *admin-queue*
+## Configure
+### conf/hibench.conf
+https://github.com/intel-hadoop/HiBench/blob/master/docs/run-hadoopbench.md
 
+As a minimum, modify the following parameters
 
+| Parameter | Example value |
+| -- | -- |
+| hibench.masters.hostnames | hurds1.fyre.ibm.com,a1.fyre.ibm.com,aa1.fyre.ibm.com
+| hibench.slaves.hostnames | hurds2.fyre.ibm.com,hurds3.fyre.ibm.com,hurds4.fyre.ibm.com,hurds5.fyre.ibm.com,hurds5.fyre.ibm.com
+### conf/hadoop.conf
+> cp cp conf/hadoop.conf.template conf/hadoop.conf<br>
 
+| Parameter | Example value |
+| --- | --- |
+| hibench.hadoop.home | /usr/hdp/current/hadoop-client
+| hibench.hdfs.master |  hdfs://a1.fyre.ibm.com:8020/tmp/hibench
+| hibench.hadoop.release | hdp
 

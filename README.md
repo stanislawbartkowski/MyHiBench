@@ -20,6 +20,11 @@ Java version: 1.8.0_201, vendor: Oracle Corporation, runtime: /usr/lib/jvm/java-
 Default locale: pl_PL, platform encoding: UTF-8
 OS name: "linux", version: "3.10.0-957.1.3.el7.x86_64", arch: "amd64", family: "unix"
 ```
+## Download HiBench and build it
+https://github.com/intel-hadoop/HiBench/blob/master/docs/build-hibench.md
+> git clone https://github.com/intel-hadoop/HiBench.git
+> cd HiBench
+> mvn -Dspark=2.1 -Dscala=2.11 clean package
 
 
 

@@ -41,11 +41,18 @@ As a minimum, modify the following parameters
 | hibench.masters.hostnames | hurds1.fyre.ibm.com,a1.fyre.ibm.com,aa1.fyre.ibm.com
 | hibench.slaves.hostnames | hurds2.fyre.ibm.com,hurds3.fyre.ibm.com,hurds4.fyre.ibm.com,hurds5.fyre.ibm.com,hurds5.fyre.ibm.com
 ### conf/hadoop.conf
-> cp cp conf/hadoop.conf.template conf/hadoop.conf<br>
+> cp conf/hadoop.conf.template conf/hadoop.conf<br>
 
 | Parameter | Example value |
 | --- | --- |
 | hibench.hadoop.home | /usr/hdp/current/hadoop-client
 | hibench.hdfs.master |  hdfs://a1.fyre.ibm.com:8020/tmp/hibench
 | hibench.hadoop.release | hdp
+### conf/spark.conf
+https://github.com/intel-hadoop/HiBench/blob/master/docs/run-sparkbench.md
 
+> cp conf/spark.conf.template conf/spark.conf
+<br>
+| Parameter | Example value |
+| -- | -- |
+| hibench.spark.home | /usr/hdp/current/spark2-client

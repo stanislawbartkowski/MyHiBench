@@ -57,3 +57,4 @@ https://github.com/intel-hadoop/HiBench/blob/master/docs/run-sparkbench.md
 | Parameter | Example value |
 | -- | -- |
 | hibench.spark.home | /usr/hdp/current/spark2-client
+| hibench.spark.master | yarn

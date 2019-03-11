@@ -66,3 +66,24 @@ Test Hadoop<br>
 Test Spark<br>
 > bin/workloads/ml/als/prepare/prepare.sh<br>
 > bin/workloads/ml/als/spark/run.sh<br>
+
+### Test size
+The test size is defined om *conf/hibnech.conf* file. 
+```
+# Data scale profile. Available value is tiny, small, large, huge, gigantic and bigdata.
+# The definition of these profiles can be found in the workload's conf file i.e. conf/workloads/micro/wordcount.conf
+hibench.scale.profile               large
+```
+### Running the *large* test
+In my environment I experienced problem with *large* test and *websearch.nutchindexing* test. Firstly, the prepared data exceeded the 1T capacity of the installation. The size can be reduced by modifying the value
+>  vi conf/workloads/websearch/nutchindexing.conf <br>
+```
+hibench.nutch.tiny.pages                        25000
+hibench.nutch.small.pages                       1000000
+hibench.nutch.large.pages                       100000000
+hibench.nutch.huge.pages                        10000000000
+hibench.nutch.gigantic.pages                    100000000000
+hibench.nutch.bigdata.pages                     100000000000
+```
+Secondly, after reducing the size, the test failed because of memory issue in M/R execution.<br>
+The memory problem also failed the *graph.nweight*

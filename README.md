@@ -100,3 +100,5 @@ https://github.com/intel-hadoop/HiBench/blob/master/docs/run-streamingbench.md
 | hibench.streambench.kafka.brokerList | a1.fyre.ibm.com:6667
 ### Prepare data
 > bin/workloads/streaming/identity/prepare/genSeedDataset.sh<br>
+### Start producing stream of data
+> bin/workloads/streaming/identity/prepare/dataGen.sh<br>

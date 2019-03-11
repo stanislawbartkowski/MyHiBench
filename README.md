@@ -87,3 +87,12 @@ hibench.nutch.bigdata.pages                     100000000000
 ```
 Secondly, after reducing the size, the test failed because of memory issue in M/R execution.<br>
 The memory problem also failed the *graph.nweight* workbench.
+## Kafka streaming
+### Configurtion
+> vi conf/hibench.conf<br>
+
+| Parameter | Example value|
+| --- | --- |
+| hibench.streambench.kafka.home | /usr/hdp/current/kafka-broker |
+| hibench.streambench.zkHost | a1.fyre.ibm.com:2181,aa1.fyre.ibm.com:2181,hurds1.fyre.ibm.com:2181
+| hibench.streambench.kafka.brokerList | a1.fyre.ibm.com:6667

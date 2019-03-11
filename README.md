@@ -86,4 +86,4 @@ hibench.nutch.gigantic.pages                    100000000000
 hibench.nutch.bigdata.pages                     100000000000
 ```
 Secondly, after reducing the size, the test failed because of memory issue in M/R execution.<br>
-The memory problem also failed the *graph.nweight*
+The memory problem also failed the *graph.nweight* workbench.

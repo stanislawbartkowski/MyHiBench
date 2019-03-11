@@ -89,6 +89,8 @@ Secondly, after reducing the size, the test failed because of memory issue in M/
 The memory problem also failed the *graph.nweight* workbench.
 ## Kafka streaming
 ### Configurtion
+https://github.com/intel-hadoop/HiBench/blob/master/docs/run-streamingbench.md
+
 > vi conf/hibench.conf<br>
 
 | Parameter | Example value|
@@ -96,3 +98,5 @@ The memory problem also failed the *graph.nweight* workbench.
 | hibench.streambench.kafka.home | /usr/hdp/current/kafka-broker |
 | hibench.streambench.zkHost | a1.fyre.ibm.com:2181,aa1.fyre.ibm.com:2181,hurds1.fyre.ibm.com:2181
 | hibench.streambench.kafka.brokerList | a1.fyre.ibm.com:6667
+### Prepare data
+> bin/workloads/streaming/identity/prepare/genSeedDataset.sh<br>

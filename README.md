@@ -58,6 +58,27 @@ https://github.com/intel-hadoop/HiBench/blob/master/docs/run-sparkbench.md
 | -- | -- |
 | hibench.spark.home | /usr/hdp/current/spark2-client
 | hibench.spark.master | yarn
+### modify
+In order to run the script in the background (by adding & sign), modify one of the scripts in two places.
+> vi bin/functions/workload_functions.sh<br>
+
+(add *eval* before $CMD)
+```bash
+function execute () {
+    CMD="$@"
+    echo -e "${BCyan}Executing: ${Cyan}${CMD}${Color_Off}"
+    eval $CMD
+}
+..........
+function execute_withlog () {
+    CMD="$@"
+    if [ -t 1 ] ; then          # Terminal, beautify the output.
+        ${workload_func_bin}/execute_with_log.py ${WORKLOAD_RESULT_FOLDER}/bench.log $CMD
+    else                        # pipe, do nothing.
+        eval $CMD
+    fi
+}
+```
 ### Test
 Test Hadoop<br>
 > bin/workloads/micro/wordcount/prepare/prepare.sh<br>
@@ -98,6 +119,16 @@ https://github.com/intel-hadoop/HiBench/blob/master/docs/run-streamingbench.md
 | hibench.streambench.kafka.home | /usr/hdp/current/kafka-broker |
 | hibench.streambench.zkHost | a1.fyre.ibm.com:2181,aa1.fyre.ibm.com:2181,hurds1.fyre.ibm.com:2181
 | hibench.streambench.kafka.brokerList | a1.fyre.ibm.com:6667
+### Modify for Kerberos
+>vi bin/workloads/streaming/identity/prepare/dataGen.sh<br>
+
+(addd */etc/hadoop/conf* to -cp)
+```
+.........
+JVM_OPTS="-Xmx1024M -server -XX:+UseCompressedOops -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+CMSScavengeBeforeRemark -XX:+DisableExplicitGC -Djava.awt.headless=true -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dkafka.logs.dir=bin/../logs -cp ${DATATOOLS}:/etc/hadoop/conf"
+..........
+
+```
 ### Prepare data
 > bin/workloads/streaming/identity/prepare/genSeedDataset.sh<br>
 ### Start producing stream of data

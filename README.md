@@ -123,7 +123,7 @@ https://github.com/intel-hadoop/HiBench/blob/master/docs/run-streamingbench.md
 >vi bin/workloads/streaming/identity/prepare/dataGen.sh<br>
 
 (addd */etc/hadoop/conf* to -cp)
-```
+```bash
 .........
 JVM_OPTS="-Xmx1024M -server -XX:+UseCompressedOops -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+CMSScavengeBeforeRemark -XX:+DisableExplicitGC -Djava.awt.headless=true -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dkafka.logs.dir=bin/../logs -cp ${DATATOOLS}:/etc/hadoop/conf"
 ..........

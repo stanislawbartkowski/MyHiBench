@@ -27,7 +27,7 @@ https://github.com/intel-hadoop/HiBench/blob/master/docs/build-hibench.md
 > cd HiBench<br>
 > mvn -Dspark=2.1 -Dscala=2.11 clean package<br>
 ## Hadoop user
-For user running the benchmark:hibench.hadoop.release
+For user running the benchmark:
 * create */user/{user}* directory
 * if Ranger is enabled, give the user privileges : *submitjob* and *admin-queue*
 ## Configure

@@ -133,3 +133,77 @@ JVM_OPTS="-Xmx1024M -server -XX:+UseCompressedOops -XX:+UseParNewGC -XX:+UseConc
 > bin/workloads/streaming/identity/prepare/genSeedDataset.sh<br>
 ### Start producing stream of data
 > bin/workloads/streaming/identity/prepare/dataGen.sh<br>
+```
+============ StreamBench Data Generator ============
+ Interval Span       : 50 ms
+ Record Per Interval : 5
+ Record Length       : 200 bytes
+ Producer Number     : 1
+ Total Records        : -1 [Infinity]
+ Total Rounds         : -1 [Infinity]
+ Kafka Topic          : identity
+====================================================
+Estimated Speed :
+    100 records/second
+    0.02 Mb/second
+====================================================
+log4j:WARN No appenders could be found for logger (org.apache.kafka.clients.producer.ProducerConfig).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+opening all parts in path: hdfs://mdp1.sb.com:8020/tmp/bench/HiBench/Streaming/Seed/uservisits, from offset: 0
+pool-1-thread-1 - starting generate data ...
+```
+### In parallel, run the Spark streaming client
+> bin/workloads/streaming/identity/spark/run.sh<br>
+```
+19/03/19 15:33:17 INFO Client:
+         client token: N/A
+         diagnostics: N/A
+         ApplicationMaster host: 192.168.122.74
+         ApplicationMaster RPC port: 0
+         queue: default
+         start time: 1553005993879
+         final status: UNDEFINED
+         tracking URL: http://mdp1.sb.com:8088/proxy/application_1552994510056_0051/
+         user: bench
+19/03/19 15:33:17 INFO YarnClientSchedulerBackend: Application application_1552994510056_0051 has started running.
+19/03/19 15:33:17 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 43370.
+19/03/19 15:33:17 INFO NettyBlockTransferService: Server created on mdp1.sb.com:43370
+19/03/19 15:33:17 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+19/03/19 15:33:17 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, mdp1.sb.com, 43370, None)
+19/03/19 15:33:17 INFO BlockManagerMasterEndpoint: Registering block manager mdp1.sb.com:43370 with 673.5 MB RAM, BlockManagerId(driver, mdp1.sb.com, 43370, None)
+19/03/19 15:33:17 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, mdp1.sb.com, 43370, None)
+19/03/19 15:33:17 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, mdp1.sb.com, 43370, None)
+19/03/19 15:33:17 INFO JettyUtils: Adding filter org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter to /metrics/json.
+19/03/19 15:33:17 INFO ContextHandler: Started o.s.j.s.ServletContextHandler@1291aab5{/metrics/json,null,AVAILABLE,@Spark}
+19/03/19 15:33:20 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.122.82:36746) with ID 1
+19/03/19 15:33:20 INFO BlockManagerMasterEndpoint: Registering block manager mdp4.sb.com:42709 with 673.5 MB RAM, BlockManagerId(1, mdp4.sb.com, 42709, None)
+19/03/19 15:33:20 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.122.105:41418) with ID 2
+19/03/19 15:33:20 INFO YarnClientSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.8
+19/03/19 15:33:20 INFO BlockManagerMasterEndpoint: Registering block manager mdp2.sb.com:37615 with 673.5 MB RAM, BlockManagerId(2, mdp2.sb.com, 37615, None)
+```
+In tiny environm, the Spark client can fail.
+```
+
+```
+### Get metrics from time to time
+>  bin/workloads/streaming/identity/common/metrics_reader.sh
+```
+start MetricsReader bench
+SPARK_identity_1_5_50_1552999658022
+SPARK_identity_1_5_50_1553000124410
+SPARK_identity_1_5_50_1553000236815
+SPARK_identity_1_5_50_1553001022513
+SPARK_identity_1_5_50_1553001112518
+SPARK_identity_1_5_50_1553001343170
+SPARK_identity_1_5_50_1553003441519
+SPARK_identity_1_5_50_1553005025887
+SPARK_identity_1_5_50_1553005572004
+SPARK_identity_1_5_50_1553005923312
+SPARK_identity_1_5_50_1553005989549
+__consumer_offsets
+ambari_kafka_service_check
+identity
+Please input the topic:
+```
+Enter the latest topic and get the result as csv file.

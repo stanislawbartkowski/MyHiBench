@@ -207,3 +207,55 @@ identity
 Please input the topic:
 ```
 Enter the latest topic and get the result as csv file.
+
+### HDP 3.1
+Out of the box, HiBench will fail while running on HDP 3.1. Several manual changes are required.
+## vi pom.xml
+> <hadoop.mr2.version>2.4.0</hadoop.mr2.version><br>
+with<br>
+> <hadoop.mr2.version>3.1.0</hadoop.mr2.version><br>
+
+### vi autogen/src/main/java/org/apache/hadoop/fs/dfsioe/TestDFSIO.java
+Replace 
+> import org.apache.commons.logging.*;<br>
+with <br>
+
+> import org.slf4j.*;<br>
+```
+import java.util.Date;
+import java.util.StringTokenizer;
+
+//import org.apache.commons.logging.*;
+import org.slf4j.*;
+
+import org.apache.hadoop.fs.*;
+import org.apache.hadoop.mapred.*;
+```
+
+At the end of **import** section, add
+> import java.util.Arrays
+```
+import org.apache.hadoop.conf.*;
+import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
+
+import java.util.Arrays
+
+/**
+```
+
+Replace
+>  private static final Log LOG = FileInputFormat.LOG;<br>
+with
+>   private static final Logger LOG = FileInputFormat.LOG;<br>
+```
+  private static final String DEFAULT_RES_FILE_NAME = "TestDFSIO_results.log";
+ 
+// private static final Log LOG = FileInputFormat.LOG;
+  private static final Logger LOG = FileInputFormat.LOG;
+
+  private static Configuration fsConfig = new Configuration();
+  private static final long MEGA = 0x100000;
+  private static String TEST_ROOT_DIR = System.getProperty("test.build.data","/benchmarks/TestDFSIO");
+  private static Path CONTROL_DIR = new Path(TEST_ROOT_DIR, "io_control");
+```

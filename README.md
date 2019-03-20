@@ -326,3 +326,12 @@ with (remove *FileUtil* qualifier)
 ## Run
 Configure, build and run *wordcount* test as described above.
 
+## Hive 3.1
+HiBench is running standalone Hive 0.17 which does not talk to Hive 3.1. The solution is to use cluster *hive* command line.
+## Modify *Hive* configuarion
+Ambari console->Hive->Advanced->Custom hive-site.xml<br>
+Add property (pay attention to | as field delimiter)
+
+| Property | Values |
+| -- | -- |
+| hive.security.authorization.sqlstd.confwhitelist.append | hive.input.format\|hive.stats.autogathe\|mapreduce.job.reduces\|mapreduce.job.maps 

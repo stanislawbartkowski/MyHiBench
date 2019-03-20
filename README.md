@@ -212,12 +212,14 @@ Enter the latest topic and get the result as csv file.
 Out of the box, HiBench will fail while running on HDP 3.1. Several manual changes are required.
 ## vi pom.xml
 > <hadoop.mr2.version>2.4.0</hadoop.mr2.version><br>
+
 with<br>
 > <hadoop.mr2.version>3.1.0</hadoop.mr2.version><br>
 
-### vi autogen/src/main/java/org/apache/hadoop/fs/dfsioe/TestDFSIO.java
+## vi autogen/src/main/java/org/apache/hadoop/fs/dfsioe/TestDFSIO.java
 Replace 
 > import org.apache.commons.logging.*;<br>
+
 with <br>
 
 > import org.slf4j.*;<br>
@@ -259,3 +261,61 @@ with
   private static String TEST_ROOT_DIR = System.getProperty("test.build.data","/benchmarks/TestDFSIO");
   private static Path CONTROL_DIR = new Path(TEST_ROOT_DIR, "io_control");
 ```
+## vi autogen/src/main/java/org/apache/hadoop/fs/dfsioe/TestDFSIOEnh.java
+In HDP 3.1, procedure *copyMerge* from package *FileUtil* is removed, so copy and paste the deprecated method body at the beginning of the Java code, before the first method and after <br>
+>  private static Configuration fsConfig = new Configuration();<br>
+
+```
+	private static Path checkDest(String srcName, FileSystem dstFS, Path dst,
+		      boolean overwrite) throws IOException {
+		    if (dstFS.exists(dst)) {
+		      FileStatus sdst = dstFS.getFileStatus(dst);
+		      if (sdst.isDirectory()) {
+		        if (null == srcName) {
+		          throw new IOException("Target " + dst + " is a directory");
+		        }
+		        return checkDest(null, dstFS, new Path(dst, srcName), overwrite);
+		      } else if (!overwrite) {
+		        throw new IOException("Target " + dst + " already exists");
+		      }
+		    }
+		    return dst;
+		  }
+	
+	private static boolean copyMerge(FileSystem srcFS, Path srcDir, FileSystem dstFS, Path dstFile, boolean deleteSource,
+			Configuration conf, String addString) throws IOException {
+		dstFile = checkDest(srcDir.getName(), dstFS, dstFile, false);
+
+		if (!srcFS.getFileStatus(srcDir).isDirectory())
+			return false;
+
+		OutputStream out = dstFS.create(dstFile);
+
+		try {
+			FileStatus contents[] = srcFS.listStatus(srcDir);
+			Arrays.sort(contents);
+			for (int i = 0; i < contents.length; i++) {
+				if (contents[i].isFile()) {
+					InputStream in = srcFS.open(contents[i].getPath());
+					try {
+						IOUtils.copyBytes(in, out, conf, false);
+						if (addString != null)
+							out.write(addString.getBytes("UTF-8"));
+
+					} finally {
+						in.close();
+					}
+				}
+			}
+		} finally {
+			out.close();
+		}
+
+		if (deleteSource) {
+			return srcFS.delete(srcDir, true);
+		} else {
+			return true;
+		}
+	}
+```
+

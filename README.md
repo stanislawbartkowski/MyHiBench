@@ -334,4 +334,21 @@ Add property (pay attention to | as field delimiter)
 
 | Property | Values |
 | -- | -- |
-| hive.security.authorization.sqlstd.confwhitelist.append | hive.input.format\|hive.stats.autogathe\|mapreduce.job.reduces\|mapreduce.job.maps 
+| hive.security.authorization.sqlstd.confwhitelist.append | hive.input.format\|hive.stats.autogather\|mapreduce.job.reduces\|mapreduce.job.maps 
+##  vi bin/workloads/sql/aggregation/hadoop/run.sh
+Use *hive* command line directly.Replace:<br>
+> CMD="$HIVE_HOME/bin/hive -f ${HIVEBENCH_SQL_FILE}"<br>
+
+with
+
+> CMD="hive -f ${HIVEBENCH_SQL_FILE}"<br>
+```
+#CMD="$HIVE_HOME/bin/hive -f ${HIVEBENCH_SQL_FILE}"
+CMD="hive -f ${HIVEBENCH_SQL_FILE}"
+```
+## Test Hive 3.1
+> bin/workloads/sql/aggregation/hadoop/run.sh
+## Run all Hadoop benchmarks
+> bin/run_all.sh
+```
+

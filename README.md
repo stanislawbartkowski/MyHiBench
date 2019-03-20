@@ -234,18 +234,6 @@ import org.apache.hadoop.fs.*;
 import org.apache.hadoop.mapred.*;
 ```
 
-At the end of **import** section, add
-> import java.util.Arrays;<br>
-```
-import org.apache.hadoop.conf.*;
-import org.apache.hadoop.util.Tool;
-import org.apache.hadoop.util.ToolRunner;
-
-import java.util.Arrays;
-
-/**
-```
-
 Replace
 >  private static final Log LOG = FileInputFormat.LOG;<br>
 with
@@ -262,7 +250,16 @@ with
   private static Path CONTROL_DIR = new Path(TEST_ROOT_DIR, "io_control");
 ```
 ## vi autogen/src/main/java/org/apache/hadoop/fs/dfsioe/TestDFSIOEnh.java
-In HDP 3.1, procedure *copyMerge* from package *FileUtil* is removed, so copy and paste the deprecated method body at the beginning of the Java code, before the first method and after: <br>
+At the end of **import** section, add
+> import java.util.Arrays;<br>
+```
+import org.apache.hadoop.fs.*;
+import org.apache.hadoop.fs.dfsioe.Analyzer._Mapper;
+import org.apache.hadoop.fs.dfsioe.Analyzer._Reducer;
+
+import java.util.Arrays;
+```
+In HDP 3.1, procedure *copyMerge* from package *FileUtil* is removed, so copy and paste the deprecated method body into the beginning of the Java code, before the first method and after: <br>
 
 > protected IOStatistics stats = new IOStatistics();<br>
 > protected int samplingInterval;<br>

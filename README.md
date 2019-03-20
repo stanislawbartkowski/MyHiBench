@@ -323,6 +323,6 @@ Replace line:
 with (remove *FileUtil* qualifier)
 > copyMerge(fs, DfsioeConfig.getInstance().getReportDir(fsConfig), fs, DfsioeConfig.getInstance().getReportTmp(fsConfig), false, fsConfig, null);<br>
 
-## Build the package
-> mvn -Dspark=2.1 -Dscala=2.11 clean package<br>
+## Run
+Configure, build and run *wordcount* test as described above.
 

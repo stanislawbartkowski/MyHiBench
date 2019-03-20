@@ -235,13 +235,13 @@ import org.apache.hadoop.mapred.*;
 ```
 
 At the end of **import** section, add
-> import java.util.Arrays
+> import java.util.Arrays;<br>
 ```
 import org.apache.hadoop.conf.*;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-import java.util.Arrays
+import java.util.Arrays;
 
 /**
 ```
@@ -321,10 +321,10 @@ In HDP 3.1, procedure *copyMerge* from package *FileUtil* is removed, so copy an
 	}
 ```
 Replace line:
->                         FileUtil.copyMerge(fs, DfsioeConfig.getInstance().getReportDir(fsConfig), fs, DfsioeConfig.getInstance().getReportTmp(fsConfig), false, fsConfig, null); <br>
+> FileUtil.copyMerge(fs, DfsioeConfig.getInstance().getReportDir(fsConfig), fs, DfsioeConfig.getInstance().getReportTmp(fsConfig), false, fsConfig, null); <br>
 
 with (remove *FileUtil* qualifier)
->                          copyMerge(fs, DfsioeConfig.getInstance().getReportDir(fsConfig), fs, DfsioeConfig.getInstance().getReportTmp(fsConfig), false, fsConfig, null);<br>
+> copyMerge(fs, DfsioeConfig.getInstance().getReportDir(fsConfig), fs, DfsioeConfig.getInstance().getReportTmp(fsConfig), false, fsConfig, null);<br>
 
 ## Build the package
 > mvn -Dspark=2.1 -Dscala=2.11 clean package<br>

@@ -349,6 +349,4 @@ CMD="hive -f ${HIVEBENCH_SQL_FILE}"
 ## Test Hive 3.1
 > bin/workloads/sql/aggregation/hadoop/run.sh
 ## Run all Hadoop benchmarks
-> bin/run_all.sh
-```
-
+> bin/run_all.sh<br>

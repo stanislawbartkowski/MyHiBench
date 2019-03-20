@@ -262,8 +262,10 @@ with
   private static Path CONTROL_DIR = new Path(TEST_ROOT_DIR, "io_control");
 ```
 ## vi autogen/src/main/java/org/apache/hadoop/fs/dfsioe/TestDFSIOEnh.java
-In HDP 3.1, procedure *copyMerge* from package *FileUtil* is removed, so copy and paste the deprecated method body at the beginning of the Java code, before the first method and after <br>
->  private static Configuration fsConfig = new Configuration();<br>
+In HDP 3.1, procedure *copyMerge* from package *FileUtil* is removed, so copy and paste the deprecated method body at the beginning of the Java code, before the first method and after: <br>
+
+> protected IOStatistics stats = new IOStatistics();<br>
+> protected int samplingInterval;<br>
 
 ```
 	private static Path checkDest(String srcName, FileSystem dstFS, Path dst,
@@ -318,4 +320,12 @@ In HDP 3.1, procedure *copyMerge* from package *FileUtil* is removed, so copy an
 		}
 	}
 ```
+Replace line:
+>                         FileUtil.copyMerge(fs, DfsioeConfig.getInstance().getReportDir(fsConfig), fs, DfsioeConfig.getInstance().getReportTmp(fsConfig), false, fsConfig, null); <br>
+
+with (remove *FileUtil* qualifier)
+>                          copyMerge(fs, DfsioeConfig.getInstance().getReportDir(fsConfig), fs, DfsioeConfig.getInstance().getReportTmp(fsConfig), false, fsConfig, null);<br>
+
+## Build the package
+> mvn -Dspark=2.1 -Dscala=2.11 clean package<br>
 

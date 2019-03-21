@@ -119,6 +119,13 @@ https://github.com/intel-hadoop/HiBench/blob/master/docs/run-streamingbench.md
 | hibench.streambench.kafka.home | /usr/hdp/current/kafka-broker |
 | hibench.streambench.zkHost | a1.fyre.ibm.com:2181,aa1.fyre.ibm.com:2181,hurds1.fyre.ibm.com:2181
 | hibench.streambench.kafka.brokerList | a1.fyre.ibm.com:6667
+### vi bin/workloads/streaming/identity/prepare/dataGen.sh
+Modify the script to get access to HDFS file system. Enhance *-cp* parameter with Hadoop client jars.
+```
+#JVM_OPTS="-Xmx1024M -server -XX:+UseCompressedOops -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+CMSScavengeBeforeRemark -XX:+DisableExplicitGC -Djava.awt.headless=true -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dkafka.logs.dir=bin/../logs -cp ${DATATOOLS}"
+
+JVM_OPTS="-Xmx1024M -server -XX:+UseCompressedOops -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+CMSScavengeBeforeRemark -XX:+DisableExplicitGC -Djava.awt.headless=true -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dkafka.logs.dir=bin/../logs -cp $HADOOP_HOME/*:$HADOOP_HOME/client/*:${DATATOOLS}"
+```
 ### Modify for Kerberos
 >vi bin/workloads/streaming/identity/prepare/dataGen.sh<br>
 

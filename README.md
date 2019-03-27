@@ -201,8 +201,30 @@ pool-1-thread-1 - starting generate data ...
 ```
 In tiny environm, the Spark client can fail.
 ```
+19/03/27 22:02:06 INFO BlockManagerMasterEndpoint: Registering block manager mdp2.sb.com:33446 with 620.1 MB RAM, BlockManagerId(2, mdp2.sb.com, 33446, None)
+java.util.concurrent.RejectedExecutionException: Task org.apache.spark.streaming.CheckpointWriter$CheckpointWriteHandler@2f33e0c8 rejected from java.util.concurrent.Threa...
+        at java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2063)
+        at java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:830)
+        at java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:1379)
+        at org.apache.spark.streaming.CheckpointWriter.write(Checkpoint.scala:290)
+        at org.apache.spark.streaming.scheduler.JobGenerator.doCheckpoint(JobGenerator.scala:297)
+        at org.apache.spark.streaming.scheduler.JobGenerator.org$apache$spark$streaming$scheduler$JobGenerator$$processEvent(JobGenerator.scala:186)
+        at org.apache.spark.streaming.scheduler.JobGenerator$$anon$1.onReceive(JobGenerator.scala:89)
+        at org.apache.spark.streaming.scheduler.JobGenerator$$anon$1.onReceive(JobGenerator.scala:88)
+        at org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:48)
 
 ```
+The solution is to modify *hibench.streambench.spark.batchInterval* parameter in *conf/spark.conf*
+```
+#======================================================
+# Spark Streaming
+#======================================================
+# Spark streaming Batchnterval in millisecond (default 100)
+#hibench.streambench.spark.batchInterval          100
+hibench.streambench.spark.batchInterval          200
+
+```
+
 ### Get metrics from time to time
 >  bin/workloads/streaming/identity/common/metrics_reader.sh
 ```

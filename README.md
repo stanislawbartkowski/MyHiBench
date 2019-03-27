@@ -25,7 +25,7 @@ https://github.com/intel-hadoop/HiBench/blob/master/docs/build-hibench.md
 <br>
 > git clone https://github.com/intel-hadoop/HiBench.git<br>
 > cd HiBench<br>
-> mvn -Dspark=2.1 -Dscala=2.11 clean package<br>
+> mvn -Dspark=2.2 lean package<br>
 ## Hadoop user
 For user running the benchmark:
 * create */user/{user}* directory

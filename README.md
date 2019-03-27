@@ -235,6 +235,41 @@ opening all parts in path: hdfs://mdp1.sb.com:8020/tmp/bench/HiBench/Streaming/S
 pool-1-thread-1 - starting generate data ...
 ```
 ## Test using Kafka command line tools
+
+**Kerberos**
+If Kafka is protected by Kerberos then *keytab* file with Kerberos principal is necessary. <br>
+Prepare *jaas* file, replace *keyTab* and *principal* parameter with valid values.
+```
+KafkaServer {
+   com.sun.security.auth.module.Krb5LoginModule required
+   useKeyTab=true
+   keyTab="/home/bench/jaas/bench.keytab"
+   storeKey=true
+   useTicketCache=false
+   serviceName="kafka"
+   principal="bench@FYRE.NET";
+};
+KafkaClient {
+   com.sun.security.auth.module.Krb5LoginModule required
+   useTicketCache=true
+   renewTicket=true
+   serviceName="kafka";
+};
+Client {
+   com.sun.security.auth.module.Krb5LoginModule required
+   useKeyTab=true
+   keyTab="/home/bench/jaas/bench.keytab"
+   storeKey=true
+   useTicketCache=false
+   serviceName="zookeeper"
+   principal="bench@FYRE.NET";
+};
+```
+Before running command line toos, export bash variable pointing to place where *jaas* file is saved.
+> export KAFKA_KERBEROS_PARAMS=-Djava.security.auth.login.config=/usr/hdp/current/kafka-broker/config/kafka_jaas.conf<br>
+<br>
+
+
 > /usr/hdp/3.1.0.0-78/kafka/bin/kafka-topics.sh --zookeeper mdp1.sb.com:2181,mdp2.sb.com:2181,mdp3.sb.com:2181 --list<br>
 ```
 SPARK_identity_1_5_50_1553699883942
@@ -296,7 +331,7 @@ identity
 19/03/19 15:33:20 INFO YarnClientSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.8
 19/03/19 15:33:20 INFO BlockManagerMasterEndpoint: Registering block manager mdp2.sb.com:37615 with 673.5 MB RAM, BlockManagerId(2, mdp2.sb.com, 37615, None)
 ```
-In tiny environm, the Spark client can fail.
+In tiny environment, the Spark client can fail.
 ```
 19/03/27 22:02:06 INFO BlockManagerMasterEndpoint: Registering block manager mdp2.sb.com:33446 with 620.1 MB RAM, BlockManagerId(2, mdp2.sb.com, 33446, None)
 java.util.concurrent.RejectedExecutionException: Task org.apache.spark.streaming.CheckpointWriter$CheckpointWriteHandler@2f33e0c8 rejected from java.util.concurrent.Threa...

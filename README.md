@@ -372,7 +372,9 @@ import org.apache.hadoop.mapred.*;
 
 Replace
 >  private static final Log LOG = FileInputFormat.LOG;<br>
+
 with
+
 >   private static final Logger LOG = FileInputFormat.LOG;<br>
 ```
   private static final String DEFAULT_RES_FILE_NAME = "TestDFSIO_results.log";

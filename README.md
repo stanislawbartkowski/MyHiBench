@@ -186,6 +186,7 @@ identity
 
 ```
 >  /usr/hdp/3.1.0.0-78/kafka/bin/kafka-console-consumer.sh  --bootstrap-server  mdp1.sb.com:6667 --topic identity<br>
+
 (stream of lines)<br>
 ```
 39568	163.48.19.64,cnwtiocjooynqvcjwrplpnexcomgpybcrqriswbfcpnazkaqkwckuqitjfznhhgbbzzwphzmqfafqdkjxlafycm,1975-03-19,0.1348409,Mozilla/5.0 (Windows; U; Windows NT 5.2) AppleWebKit/525.13

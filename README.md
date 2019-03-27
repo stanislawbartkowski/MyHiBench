@@ -119,6 +119,16 @@ https://github.com/intel-hadoop/HiBench/blob/master/docs/run-streamingbench.md
 | hibench.streambench.kafka.home | /usr/hdp/current/kafka-broker |
 | hibench.streambench.zkHost | a1.fyre.ibm.com:2181,aa1.fyre.ibm.com:2181,hurds1.fyre.ibm.com:2181
 | hibench.streambench.kafka.brokerList | a1.fyre.ibm.com:6667
+
+<br>
+In *conf/spark.conf* replace *hibench.streambench.spark.checkpointPath* parameter with HDFS value accessible for the user running the test.<br>
+
+> vi conf/spark.conf
+
+| Parameter | Value |
+| -- | -- |
+| hibench.streambench.spark.checkpointPath | /tmp |
+
 ### vi bin/workloads/streaming/identity/prepare/dataGen.sh
 Modify the script to get access to HDFS file system. Enhance *-cp* parameter with Hadoop client jars.
 ```

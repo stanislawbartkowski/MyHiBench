@@ -88,7 +88,7 @@ After spark2.2 profile add spark2.3
     </profile>
 ```
 ### Build
-> mvn mvn -Dspark=2.3 clean package
+> mvn -Dspark=2.3 clean package
 
 ## Hadoop user
 For user running the benchmark:

@@ -63,7 +63,7 @@ After spark2.2 profile add spark2.3
       </activation>
     </profile>
 ```
-### sparkbench/structuredStreaming/pom.xml
+### vi sparkbench/structuredStreaming/pom.xml
 ```XML
  <profile>
       <id>spark2.3</id>

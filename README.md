@@ -170,6 +170,38 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
 opening all parts in path: hdfs://mdp1.sb.com:8020/tmp/bench/HiBench/Streaming/Seed/uservisits, from offset: 0
 pool-1-thread-1 - starting generate data ...
 ```
+## Test using Kafka command line tools
+> /usr/hdp/3.1.0.0-78/kafka/bin/kafka-topics.sh --zookeeper mdp1.sb.com:2181,mdp2.sb.com:2181,mdp3.sb.com:2181 --list<br>
+```
+SPARK_identity_1_5_50_1553699883942
+SPARK_identity_1_5_50_1553700725899
+SPARK_identity_1_5_50_1553700790191
+SPARK_identity_1_5_50_1553719366371
+SPARK_identity_1_5_50_1553719791840
+SPARK_identity_1_5_50_1553720512069
+SPARK_identity_1_5_50_1553720760253
+__consumer_offsets
+ambari_kafka_service_check
+identity
+
+```
+>  /usr/hdp/3.1.0.0-78/kafka/bin/kafka-console-consumer.sh  --bootstrap-server  mdp1.sb.com:6667 --topic identity<br>
+(stream of lines)<br>
+```
+39568	163.48.19.64,cnwtiocjooynqvcjwrplpnexcomgpybcrqriswbfcpnazkaqkwckuqitjfznhhgbbzzwphzmqfafqdkjxlafycm,1975-03-19,0.1348409,Mozilla/5.0 (Windows; U; Windows NT 5.2) AppleWebKit/525.13
+39568	169.95.134.151,cnwtiocjooynqvcjwrplpnexcomgpybcrqriswbfcpnazkaqkwckuqitjfznhhgbbzzwphzmqfafqdkjxlafycm,2007-07-02,0.23636532,Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0),ISL,I
+39568	142.5.139.121,cnwtiocjooynqvcjwrplpnexcomgpybcrqriswbfcpnazkaqkwckuqitjfznhhgbbzzwphzmqfafqdkjxlafycm,1979-09-02,0.99028385,Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0),BEL,BE
+39568	57.174.175.181,cnwtiocjooynqvcjwrplpnexcomgpybcrqriswbfcpnazkaqkwckuqitjfznhhgbbzzwphzmqfafqdkjxlafycm,1994-12-23,0.4787203,Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0),AUS,AU
+39576	178.227.245.86,rbugnwgtufibpnzapyujlpkycickwftijhmfiaffhmxhvlgevubmxnmeoyrn,2003-05-25,0.44906622,Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1),PHL,PHL-EN,Sakha,6
+39576	207.206.180.144,rbugnwgtufibpnzapyujlpkycickwftijhmfiaffhmxhvlgevubmxnmeoyrn,2011-07-07,0.989489,Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1),POL,POL-PL,sulphured,6
+39576	119.181.133.206,rbugnwgtufibpnzapyujlpkycickwftijhmfiaffhmxhvlgevubmxnmeoyrn,1980-03-01,0.5762792,Pzheuxmiqiggwls/3.3,ARE,ARE-AR,inevitable,10
+39576	90.190.160.33,rbugnwgtufibpnzapyujlpkycickwftijhmfiaffhmxhvlgevubmxnmeoyrn,1974-02-07,0.3832044,Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1),ISL,ISL-IS,firemen,2
+39576	233.99.172.182,rbugnwgtufibpnzapyujlpkycickwftijhmfiaffhmxhvlgevubmxnmeoyrn,1989-10-19,0.7538247,Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1),ROU,ROU-RO,paramedic,1
+39576	217.33.120.134,rbugnwgtufibpnzapyujlpkycickwftijhmfiaffhmxhvlgevubmxnmeoyrn,1972-03-04,0.37720335,Wqzfuwmaqsleg/5.1,SVK,SVK-SK,knifes,8
+39576	83.184.206.126,rbugnwgtufibpnzapyujlpkycickwftijhmfiaffhmxhvlgevubmxnmeoyrn,1997-03-19,0.76973563,Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0),PRY,PRY-ES,Agustin,3
+
+
+```
 ### In parallel, run the Spark streaming client
 > bin/workloads/streaming/identity/spark/run.sh<br>
 ```

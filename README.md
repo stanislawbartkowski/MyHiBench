@@ -460,7 +460,10 @@ with (remove *FileUtil* qualifier)
 > copyMerge(fs, DfsioeConfig.getInstance().getReportDir(fsConfig), fs, DfsioeConfig.getInstance().getReportTmp(fsConfig), false, fsConfig, null);<br>
 
 ## Run
-Configure, build and run *wordcount* test as described above.
+Configure, build and run *wordcount* test as described above. <br>
+Then, before running the full benchmark, execute<br>
+
+> /home/bench/HiBench/bin/workloads/micro/dfsioe/prepare/prepare.sh<br>
 
 ## Hive 3.1
 HiBench is running standalone Hive 0.17 which does not talk to Hive 3.1. The solution is to use cluster *hive* command line.

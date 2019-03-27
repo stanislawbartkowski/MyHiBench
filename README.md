@@ -25,7 +25,71 @@ https://github.com/intel-hadoop/HiBench/blob/master/docs/build-hibench.md
 <br>
 > git clone https://github.com/intel-hadoop/HiBench.git<br>
 > cd HiBench<br>
-> mvn -Dspark=2.2 lean package<br>
+> mvn -Dspark=2.2 clean package<br>
+## Enable for Spark 2.3
+### vi sparkbench/pom.xml
+After spark2.2 profile add spark2.3
+```XML
+  <profile>
+      <id>spark2.3</id>
+      <properties>
+        <spark.version>2.3.0</spark.version>
+        <spark.bin.version>2.3</spark.bin.version>
+      </properties>
+      <activation>
+        <property>
+          <name>spark</name>
+          <value>2.3</value>
+        </property>
+      </activation>
+    </profile>
+```
+### vi sparkbench/streaming/pom.xml
+```XML
+  <profile>
+      <id>spark2.3</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.apache.spark</groupId>
+          <artifactId>spark-streaming-kafka-0-8_2.11</artifactId>
+          <version>2.3.0</version>
+        </dependency>
+      </dependencies>
+      <activation>
+        <property>
+          <name>spark</name>
+          <value>2.3</value>
+        </property>
+      </activation>
+    </profile>
+```
+### sparkbench/structuredStreaming/pom.xml
+```XML
+ <profile>
+      <id>spark2.3</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.apache.spark</groupId>
+          <artifactId>spark-streaming-kafka-0-8_${scala.binary.version}</artifactId>
+          <version>2.3.0</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.spark</groupId>
+          <artifactId>spark-sql-kafka-0-10_${scala.binary.version}</artifactId>
+          <version>2.3.0</version>
+        </dependency>
+      </dependencies>
+      <activation>
+        <property>
+          <name>spark</name>
+          <value>2.3</value>
+        </property>
+      </activation>
+    </profile>
+```
+### Build
+> mvn mvn -Dspark=2.3 clean package
+
 ## Hadoop user
 For user running the benchmark:
 * create */user/{user}* directory

@@ -266,7 +266,7 @@ Client {
 };
 ```
 Before running command line toos, export bash variable pointing to place where *jaas* file is saved.
-> export KAFKA_KERBEROS_PARAMS=-Djava.security.auth.login.config=/home/bench/jaas/kafka_jaas.conf
+> export KAFKA_OPTS=-Djava.security.auth.login.config=/home/bench/jaas/kafka_jaas.conf
 <br>
 
 List topics<br>

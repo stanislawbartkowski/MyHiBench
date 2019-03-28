@@ -269,6 +269,7 @@ Before running command line toos, export bash variable pointing to place where *
 > export KAFKA_KERBEROS_PARAMS=-Djava.security.auth.login.config=/usr/hdp/current/kafka-broker/config/kafka_jaas.conf<br>
 <br>
 
+List topics<br>
 
 > /usr/hdp/3.1.0.0-78/kafka/bin/kafka-topics.sh --zookeeper mdp1.sb.com:2181,mdp2.sb.com:2181,mdp3.sb.com:2181 --list<br>
 ```

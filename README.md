@@ -217,15 +217,36 @@ Modify the script to get access to HDFS file system. Enhance *-cp* parameter wit
 
 JVM_OPTS="-Xmx1024M -server -XX:+UseCompressedOops -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+CMSScavengeBeforeRemark -XX:+DisableExplicitGC -Djava.awt.headless=true -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dkafka.logs.dir=bin/../logs -cp $HADOOP_HOME/*:$HADOOP_HOME/client/*:${DATATOOLS}"
 ```
-### Modify for Kerberos
+### Kerberos
+If HDP cluster is kerberized, not only AD/Kerberos authentication is enabled, but also Kafka ACL based authorization is enforced.
+### Kafka ACL authorization
+It is simple if Ranger Kafka plugin is active. Add the user running HiBench (here *bench*) to the same group as powerful *kafka* user. After the benchmark test is completed, remove the user to close the potential security gap.
+![alt](https://github.com/stanislawbartkowski/hdpactivedirectory/blob/master/img/Zrzut%20ekranu%20z%202019-03-29%2023-29-38.png)
+### Kerberos authentication
+Change in the source code is necessary.
+>  vi  autogen/src/main/java/com/intel/hibench/datagen/streaming/util/KafkaSender.java<br>
+```Java
+   props.setProperty(ProducerConfig.ACKS_CONFIG, "1");
+    props.getProperty(ProducerConfig.CLIENT_ID_CONFIG, "DataGenerator");
+
+// Kerberos authentication
+props.setProperty("security.protocol", "SASL_PLAINTEXT");
+props.setProperty("sasl.kerberos.service.name", "kafka");
+
+    this.kafkaProducer = new KafkaProducer(props);
+```
+After fixing up the code, rebuild the project 
+> mvn clean package -Dspark=2.3
+
+Modify the launching script
 >vi bin/workloads/streaming/identity/prepare/dataGen.sh<br>
 
-(add */etc/hadoop/conf* to -cp)
+(add */etc/hadoop/conf* to -cp)<br>
+(add enabling Kerberos authentication)
 ```bash
 .........
-JVM_OPTS="-Xmx1024M -server -XX:+UseCompressedOops -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+CMSScavengeBeforeRemark -XX:+DisableExplicitGC -Djava.awt.headless=true -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dkafka.logs.dir=bin/../logs -cp ${DATATOOLS}:/etc/hadoop/conf"
+JVM_OPTS="-Djava.security.auth.login.config=/etc/kafka/conf/kafka_client_jaas.conf -Xmx1024M -server -XX:+UseCompressedOops -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+CMSScavengeBeforeRemark -XX:+DisableExplicitGC -Djava.awt.headless=true -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dkafka.logs.dir=bin/../logs -cp ${DATATOOLS}:/etc/hadoop/conf"
 ..........
-
 ```
 ### Prepare data
 > bin/workloads/streaming/identity/prepare/genSeedDataset.sh<br>
@@ -253,55 +274,6 @@ pool-1-thread-1 - starting generate data ...
 ```
 ## Test using Kafka command line tools
 
-**Kerberos**
-If Kafka is protected by Kerberos then *keytab* file with Kerberos principal is necessary. <br>
-Prepare *jaas* file, replace *keyTab* and *principal* parameter with valid values.
-```
-KafkaServer {
-   com.sun.security.auth.module.Krb5LoginModule required
-   useKeyTab=true
-   keyTab="/home/bench/jaas/bench.keytab"
-   storeKey=true
-   useTicketCache=false
-   serviceName="kafka"
-   principal="bench@FYRE.NET";
-};
-KafkaClient {
-   com.sun.security.auth.module.Krb5LoginModule required
-   useTicketCache=true
-   renewTicket=true
-   serviceName="kafka";
-};
-Client {
-   com.sun.security.auth.module.Krb5LoginModule required
-   useKeyTab=true
-   keyTab="/home/bench/jaas/bench.keytab"
-   storeKey=true
-   useTicketCache=false
-   serviceName="zookeeper"
-   principal="bench@FYRE.NET";
-};
-```
-Before running command line toos, export bash variable pointing to place where *jaas* file is saved.
-> export KAFKA_OPTS=-Djava.security.auth.login.config=/home/bench/jaas/kafka_jaas.conf
-<br>
-
-List topics<br>
-
-> /usr/hdp/3.1.0.0-78/kafka/bin/kafka-topics.sh --zookeeper mdp1.sb.com:2181,mdp2.sb.com:2181,mdp3.sb.com:2181 --list<br>
-```
-SPARK_identity_1_5_50_1553699883942
-SPARK_identity_1_5_50_1553700725899
-SPARK_identity_1_5_50_1553700790191
-SPARK_identity_1_5_50_1553719366371
-SPARK_identity_1_5_50_1553719791840
-SPARK_identity_1_5_50_1553720512069
-SPARK_identity_1_5_50_1553720760253
-__consumer_offsets
-ambari_kafka_service_check
-identity
-
-```
 >  /usr/hdp/3.1.0.0-78/kafka/bin/kafka-console-consumer.sh  --bootstrap-server  mdp1.sb.com:6667 --topic identity<br>
 
 (stream of lines)<br>

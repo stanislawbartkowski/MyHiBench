@@ -87,6 +87,23 @@ After spark2.2 profile add spark2.3
       </activation>
     </profile>
 ```
+### vi autogen/pom.xml
+(kafka client 0.10 instead of 0.8)<br>
+```XML
+<!--
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka-clients</artifactId>
+      <version>0.8.2.2</version>
+    </dependency>
+-->
+    <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka -->
+<dependency>
+    <groupId>org.apache.kafka</groupId>
+    <artifactId>kafka_2.11</artifactId>
+    <version>0.10.0.0</version>
+</dependency>
+```
 ### Build
 > mvn -Dspark=2.3 clean package
 

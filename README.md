@@ -273,8 +273,9 @@ opening all parts in path: hdfs://mdp1.sb.com:8020/tmp/bench/HiBench/Streaming/S
 pool-1-thread-1 - starting generate data ...
 ```
 ## Test using Kafka command line tools
-
->  /usr/hdp/3.1.0.0-78/kafka/bin/kafka-console-consumer.sh  --bootstrap-server  mdp1.sb.com:6667 --topic identity<br>
+(command example)
+>  /usr/hdp/current/kafka-broker/bin/kafka-console-consumer.sh --bootstrap-server  mdp1.sb.com:6667 --topic identity<br>
+>  /usr/hdp/current/kafka-broker/bin/kafka-console-consumer.sh --security-protocol PLAINTEXTSASL --bootstrap-server a1.fyre.ibm.com:6667,aa1.fyre.ibm.com:6667,hurds1.fyre.ibm.com:6667 --topic identity<br>
 
 (stream of lines)<br>
 ```
